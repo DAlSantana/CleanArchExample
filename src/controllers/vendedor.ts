@@ -1,6 +1,6 @@
+import { Request, Response, Router } from "express";
 import VendendorGateway from "../gateway/vendendorGateway";
 import useCaseCadastrarVendedor from "../useCase/useCaseCadastrarVendedor";
-import { Request, Response, Router } from "express";
 
 export default class VendendorController {
   private _router: Router;

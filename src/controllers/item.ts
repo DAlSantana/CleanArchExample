@@ -1,6 +1,6 @@
+import { Request, Response, Router } from "express";
 import ItemGateway from "../gateway/itemGateway";
 import useCaseItem from "../useCase/useCaseItem";
-import { Request, Response, Router } from "express";
 
 export default class ItemController {
   private _router: Router;
