@@ -1,25 +1,33 @@
 import { Cliente } from "@src/models/cliente";
 import { ClienteInterfaceGateway } from "./interfaces/clienteInterface";
 
-export class ClienteGateway implements ClienteInterfaceGateway {
-  private _clientes: Array<Cliente>;
+export default class ClienteGateway implements ClienteInterfaceGateway {
+  public static _clientes: Array<Cliente>;
 
   constructor() {
-    this._clientes = new Array<Cliente>();
+    ClienteGateway._clientes = new Array<Cliente>();
   }
 
   public validarSeClienteExiste(nome: string): Array<Cliente> {
-    if (this._clientes.some((cliente) => cliente.nome === nome)) {
+    if (ClienteGateway._clientes.some((cliente) => cliente.nome === nome)) {
       throw new Error("Cliente já existente");
     }
-    return this._clientes;
+    return ClienteGateway._clientes;
   }
 
-  public get clientes(): Array<Cliente> {
-    return this._clientes;
+  public buscarClientes(): Array<Cliente> {
+    return ClienteGateway._clientes;
   }
 
   public adicionarCliente(cliente: Cliente): void {
     this.validarSeClienteExiste(cliente.nome).push(cliente);
+  }
+
+  public static buscarClienteEspecifico(nome: string): Cliente {
+    if (ClienteGateway._clientes.find((cliente) => cliente.nome == nome)) {
+      return ClienteGateway._clientes.find((cliente) => cliente.nome == nome)!;
+    } else {
+      throw new Error("Cliente não existe");
+    }
   }
 }

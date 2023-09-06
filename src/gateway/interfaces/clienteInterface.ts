@@ -1,5 +1,11 @@
 import { Cliente } from "@src/models/cliente";
 
+// interface buscarClienteEspecifico {
+//   buscarClienteEspecifico(nome: string): Cliente | void;
+// }
+interface buscarClientes {
+  buscarClientes(): Array<Cliente>;
+}
 interface validarClienteExiste {
   validarSeClienteExiste(nome: string): Array<Cliente>;
 }
@@ -9,7 +15,9 @@ interface adicionarCliente {
 }
 export interface ClienteInterfaceGateway
   extends validarClienteExiste,
-    adicionarCliente {
+    adicionarCliente,
+    buscarClientes {
   validarSeClienteExiste(nome: string): Array<Cliente>;
   adicionarCliente(cliente: Cliente): void;
+  buscarClientes(): Array<Cliente>;
 }

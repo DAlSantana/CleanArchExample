@@ -1,7 +1,6 @@
 import useCaseCadastrarCliente from "../useCase/useCaseCedastrarCliente";
 import { Router, Request, Response } from "express";
-import { ClienteGateway } from "../gateway/clienteGateway";
-
+import ClienteGateway from "../gateway/clienteGateway";
 export default class ClienteController {
   private _router: Router;
   private _clienteGateway: ClienteGateway;
@@ -31,7 +30,7 @@ export default class ClienteController {
 
   private consultarClientesCadastrados(): void {
     this._router.get("", (request: Request, response: Response) => {
-      response.status(200).json(this._clienteGateway.clientes);
+      response.status(200).json(this._clienteGateway.buscarClientes());
     });
   }
 }

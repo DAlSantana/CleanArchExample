@@ -1,4 +1,4 @@
-import { ClienteGateway } from "@src/gateway/clienteGateway";
+import ClienteGateway from "../gateway/clienteGateway";
 import { Cliente } from "../models/cliente";
 
 export default class useCaseCadastrarCliente {
