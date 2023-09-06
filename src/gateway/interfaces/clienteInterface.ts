@@ -7,7 +7,7 @@ interface buscarClientes {
   buscarClientes(): Array<Cliente>;
 }
 interface validarClienteExiste {
-  validarSeClienteExiste(nome: string): Array<Cliente>;
+  validarSeClienteExiste(id: number): Array<Cliente>;
 }
 
 interface adicionarCliente {
@@ -17,7 +17,7 @@ export interface ClienteInterfaceGateway
   extends validarClienteExiste,
     adicionarCliente,
     buscarClientes {
-  validarSeClienteExiste(nome: string): Array<Cliente>;
+  validarSeClienteExiste(id: number): Array<Cliente>;
   adicionarCliente(cliente: Cliente): void;
   buscarClientes(): Array<Cliente>;
 }

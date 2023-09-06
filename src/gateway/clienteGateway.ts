@@ -8,8 +8,8 @@ export default class ClienteGateway implements ClienteInterfaceGateway {
     ClienteGateway._clientes = new Array<Cliente>();
   }
 
-  public validarSeClienteExiste(nome: string): Array<Cliente> {
-    if (ClienteGateway._clientes.some((cliente) => cliente.nome === nome)) {
+  public validarSeClienteExiste(id: number): Array<Cliente> {
+    if (ClienteGateway._clientes.some((cliente) => cliente.id === id)) {
       throw new Error("Cliente já existente");
     }
     return ClienteGateway._clientes;
@@ -20,12 +20,12 @@ export default class ClienteGateway implements ClienteInterfaceGateway {
   }
 
   public adicionarCliente(cliente: Cliente): void {
-    this.validarSeClienteExiste(cliente.nome).push(cliente);
+    this.validarSeClienteExiste(cliente.id).push(cliente);
   }
 
-  public static buscarClienteEspecifico(nome: string): Cliente {
-    if (ClienteGateway._clientes.find((cliente) => cliente.nome == nome)) {
-      return ClienteGateway._clientes.find((cliente) => cliente.nome == nome)!;
+  public static buscarClienteEspecifico(id: number): Cliente {
+    if (this._clientes.some((cliente) => cliente.id == id)) {
+      return ClienteGateway._clientes.find((cliente) => cliente.id == id)!;
     } else {
       throw new Error("Cliente não existe");
     }
