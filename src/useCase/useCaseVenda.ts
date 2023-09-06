@@ -10,12 +10,11 @@ export class useCaseVenda {
   private _vendedor: Vendedor;
   private _dataDaVenda: Date;
 
-  constructor(cliente: Cliente, vendendor: Vendedor, items: Array<string>) {
+  constructor(cliente: Cliente, vendendor: Vendedor, items: Array<Item>) {
     this._cliente = cliente;
-    this._itens = new Array<Item>();
+    this._itens = items;
     this._dataDaVenda = new Date();
     this._vendedor = vendendor;
-    this.adicionarItemNaVenda(items);
   }
 
   private adicionarDescontNaVendaSeClienteForPremium(
@@ -24,13 +23,14 @@ export class useCaseVenda {
     return valorTotal - this.VALOR_DESCONTO_PREMIUM;
   }
 
-  public adicionarItemNaVenda(items: Array<string>): void {
-    const itemsDaVenda = items.map((item) => {
-      return ItemGateway.recuperarItemEspecifico(item);
-    });
+  //Depreceated
+  // public adicionarItemNaVenda(items: Array<string>): void {
+  //   const itemsDaVenda = items.map((item) => {
+  //     return ItemGateway.recuperarItemEspecifico(item);
+  //   });
 
-    this._itens = itemsDaVenda;
-  }
+  //   this._itens = itemsDaVenda;
+  // }
 
   //TODO: Refazer esse método
   public calcularValorDaVenda(): number {

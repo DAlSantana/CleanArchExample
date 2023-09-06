@@ -1,5 +1,5 @@
-import { useCaseVenda } from "../useCase/useCaseVenda";
 import { Request, Response, Router } from "express";
+import { useCaseVenda } from "../useCase/useCaseVenda";
 
 import VendedorGateway from "../gateway/vendendorGateway";
 import ClienteGateway from "../gateway/clienteGateway";
@@ -17,15 +17,20 @@ export default class VendaController {
     return this._router;
   }
 
+  //TODO: Try Catch, items obj
   private criarVenda(): void {
     this._router.post("/criarVenda", (request: Request, response: Response) => {
       const { idVendedor, nomeCliente, items } = request.body;
-      VendaController._useCaseVenda = new useCaseVenda(
-        ClienteGateway.buscarClienteEspecifico(nomeCliente),
-        VendedorGateway.buscarVendedorEspecifico(idVendedor),
-        items
-      );
-      response.status(201).send();
+      try {
+        VendaController._useCaseVenda = new useCaseVenda(
+          ClienteGateway.buscarClienteEspecifico(nomeCliente),
+          VendedorGateway.buscarVendedorEspecifico(idVendedor),
+          items
+        );
+        response.status(201).send();
+      } catch (error: any) {
+        response.status(500).send(error);
+      }
     });
   }
 
