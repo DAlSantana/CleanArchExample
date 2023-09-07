@@ -14,4 +14,5 @@ Antes de começar, certifique-se de ter o Node.js e o npm instalados.
 
 ```bash
 npm install
+npm run build
 npm run dev
