@@ -1,17 +1,17 @@
 import { Item } from "../models/item";
 
 export default class ItemGateway {
-  public static items: Array<Item>;
+  public items: Array<Item>;
 
   constructor() {
-    ItemGateway.items = new Array<Item>();
+    this.items = new Array<Item>();
   }
 
   private validarSeItemExiste(id: string): Array<Item> {
-    if (ItemGateway.items.some((item) => item.id === id)) {
+    if (this.items.some((item) => item.id === id)) {
       throw new Error("Item já existe !!!");
     }
-    return ItemGateway.items;
+    return this.items;
   }
 
   public cadastrarItem(item: Item) {
@@ -19,10 +19,10 @@ export default class ItemGateway {
   }
 
   public recuperarItem(): Array<Item> {
-    return ItemGateway.items;
+    return this.items;
   }
 
-  public static recuperarItemEspecifico(id: string): Item {
-    return ItemGateway.items.find((item) => item.id === id)!;
+  public recuperarItemEspecifico(id: string): Item {
+    return this.items.find((item) => item.id === id)!;
   }
 }

@@ -1,9 +1,5 @@
 import { Vendedor } from "@src/models/vendedor";
 
-interface buscarVendedorEspecifico {
-  buscarVendedorEspecifico(matricula: string): Vendedor | void;
-}
-
 interface cadastrarVendendor {
   cadastrarVendedor(vendedor: Vendedor): void;
 }
