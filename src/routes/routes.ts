@@ -6,7 +6,7 @@ import VendaController from "../controllers/venda";
 import ClienteGateway from "../gateway/clienteGateway";
 import VendedorGateway from "../gateway/vendendorGateway";
 import ItemGateway from "../gateway/itemGateway";
-import VendaGateway from "../gateway/venda";
+import VendaGateway from "../gateway/vendaGateway";
 class Routes {
   static define(router: Router): Router {
     const clienteGateway = new ClienteGateway();

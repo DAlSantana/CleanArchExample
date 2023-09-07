@@ -1,6 +1,7 @@
 import { Venda } from "../models/venda";
+import { VendaInterfaceGateway } from "./interfaces/vendaInterface";
 
-export default class VendaGateway {
+export default class VendaGateway implements VendaInterfaceGateway {
   private _vendas: Array<Venda>;
 
   constructor() {

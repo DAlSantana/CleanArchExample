@@ -2,7 +2,7 @@ import { Cliente } from "../models/cliente";
 import { Item } from "../models/item";
 import { Vendedor } from "../models/vendedor";
 import ItemGateway from "../gateway/itemGateway";
-import VendaGateway from "../gateway/venda";
+import VendaGateway from "../gateway/vendaGateway";
 import { Venda } from "../models/venda";
 
 export class useCaseVenda {

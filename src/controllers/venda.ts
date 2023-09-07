@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { useCaseVenda } from "../useCase/useCaseVenda";
 import VendedorGateway from "../gateway/vendendorGateway";
 import ClienteGateway from "../gateway/clienteGateway";
-import VendaGateway from "../gateway/venda";
+import VendaGateway from "../gateway/vendaGateway";
 
 export default class VendaController {
   private _router: Router;
@@ -63,7 +63,9 @@ export default class VendaController {
     } catch (error: any) {
       response
         .status(500)
-        .send(error instanceof Error ? error.message : "Erro desconhecido.");
+        .json({
+          error: error instanceof Error ? error.message : "Erro desconhecido.",
+        });
     }
   }
 }
