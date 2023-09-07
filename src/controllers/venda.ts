@@ -1,44 +1,69 @@
 import { Request, Response, Router } from "express";
 import { useCaseVenda } from "../useCase/useCaseVenda";
-
 import VendedorGateway from "../gateway/vendendorGateway";
 import ClienteGateway from "../gateway/clienteGateway";
+import VendaGateway from "../gateway/venda";
 
 export default class VendaController {
   private _router: Router;
-  public static _useCaseVenda: useCaseVenda;
-  constructor(router: Router) {
+  private _vendaGateway: VendaGateway;
+  private _clienteGateway: ClienteGateway;
+  private _vendedorGateway: VendedorGateway;
+
+  constructor(
+    router: Router,
+    vendaGateway: VendaGateway,
+    clienteGateway: ClienteGateway,
+    vendedorGateway: VendedorGateway
+  ) {
     this._router = router;
-    this.criarVenda();
-    this.calcularValorVenda();
+    this._vendaGateway = vendaGateway;
+    this._clienteGateway = clienteGateway;
+    this._vendedorGateway = vendedorGateway;
+    this.inicializarRotas();
   }
 
   public get router(): Router {
     return this._router;
   }
 
-  //TODO: Try Catch, items obj
-  private criarVenda(): void {
-    this._router.post("/criarVenda", (request: Request, response: Response) => {
-      const { idVendedor, nomeCliente, items } = request.body;
-      try {
-        VendaController._useCaseVenda = new useCaseVenda(
-          ClienteGateway.buscarClienteEspecifico(nomeCliente),
-          VendedorGateway.buscarVendedorEspecifico(idVendedor),
-          items
-        );
-        response.status(201).send();
-      } catch (error: any) {
-        response.status(500).send(error);
-      }
-    });
+  private inicializarRotas() {
+    this._router.get("/valortotalVenda", this.buscarVenda.bind(this));
+    this._router.post("/criarVenda", this.criarVenda.bind(this));
   }
 
-  private calcularValorVenda(): void {
-    this._router.get("/total", (request: Request, response: Response) => {
+  private async criarVenda(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    const { matricula, items, idCliente, idVenda } = request.body;
+
+    try {
+      const cliente = await this._clienteGateway.buscarClienteEspecifico(
+        idCliente
+      );
+      const vendedor = await this._vendedorGateway.buscarVendedorEspecifico(
+        matricula
+      );
+      new useCaseVenda(cliente, vendedor, items, this._vendaGateway, idVenda);
+
+      response.status(201).send();
+    } catch (error: any) {
       response
-        .status(200)
-        .json({ valor: VendaController._useCaseVenda.calcularValorDaVenda() });
-    });
+        .status(500)
+        .send(error instanceof Error ? error.message : "Erro desconhecido.");
+    }
+  }
+
+  private buscarVenda(request: Request, response: Response): void {
+    const { id } = request.query;
+    try {
+      const venda = this._vendaGateway.buscarVenda(Number(id));
+      response.status(200).json({ venda: venda });
+    } catch (error: any) {
+      response
+        .status(500)
+        .send(error instanceof Error ? error.message : "Erro desconhecido.");
+    }
   }
 }
