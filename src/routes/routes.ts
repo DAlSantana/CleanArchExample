@@ -8,25 +8,29 @@ import VendedorGateway from "../gateway/vendendorGateway";
 import ItemGateway from "../gateway/itemGateway";
 import VendaGateway from "../gateway/vendaGateway";
 class Routes {
+  private static clienteGateway = new ClienteGateway();
+  private static vendedorGateway = new VendedorGateway();
+  private static vendaGateway = new VendaGateway();
+  private static itemGateway = new ItemGateway();
   static define(router: Router): Router {
-    const clienteGateway = new ClienteGateway();
-    const vendedorGateway = new VendedorGateway();
-    const vendaGateway = new VendaGateway();
-    const itemGateway = new ItemGateway();
     router.use(
       "/venda",
-      new VendaController(router, vendaGateway, clienteGateway, vendedorGateway)
-        .router
+      new VendaController(
+        router,
+        Routes.vendaGateway,
+        Routes.clienteGateway,
+        Routes.vendedorGateway
+      ).router
     );
     router.use(
       "/vendedor",
-      new VendendorController(router, vendedorGateway).router
+      new VendendorController(router, Routes.vendedorGateway).router
     );
     router.use(
       "/cliente",
-      new ClienteController(router, clienteGateway).router
+      new ClienteController(router, Routes.clienteGateway).router
     );
-    router.use("/item", new ItemController(router, itemGateway).router);
+    router.use("/item", new ItemController(router, Routes.itemGateway).router);
     return router;
   }
 }
